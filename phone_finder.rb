@@ -27,6 +27,29 @@ class PhoneFinder
     end
     invalid_rows
   end
+
+  def invalid_date
+    invalid_dates = []
+    @data.each_with_index do |row,counter|
+      unless row.match(/\d{1,2}\/\d{1,2}\/\d{2,4}$/)
+        invalid_dates << counter + 1
+      end
+    end
+    invalid_rows
+  end
+
+  def  invalid_email
+    invalid_emails =[]
+    @data.each_with_index do |row, counter|
+      unless row.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i)
+        invalid_emails << counter + 1
+      end
+    end
+    invalid_emails
+  end
+
+
+
 end
 
 

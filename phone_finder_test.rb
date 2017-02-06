@@ -13,31 +13,31 @@ class PhoneFinderTest < Minitest::Test
   end
 
 
-  def test_invalid_lines
+  def test_invalid_number
    finder = PhoneFinder.new('homework.csv')
    assert_equal [2,3,4,5,6], finder.invalid_number
    #Go over each line checking to make sure that the phone numbers match the RegEx for Phone number.  If a line (or subarray I guess) doesn't have a phone number, or an invalid one
    #It should say which line has the error
    #Regex /\d{3}-\d{3}-\d{4}/
 
-  #  phone_numbers =[]
-  #  finder.each do |array|
-  #    array.each do |string|
-  #      phone_numbers << string.scan(/\d{3}-\d{3}-\d{4}/)
-  #
    end
 
-  def valid_join_date
+  def test_valid_join_date
+    finder = PhoneFinder.new('homework.csv')
+    assert_equal [2,3], finder.invalid_date
     #Very similar to the above valid_phone_number.
     #regex ^\d{1,2}\/\d{1,2}\/\d{2,4}$
   end
 
-  def valid_email
+  def test_valid_email
+    finder = PhoneFinder.new('homework.csv')
+    assert_equal [2,6,7,8], finder.invalid_email
     #Very similar to above
     #RegEx
   end
 
-  def valid_data
+  def test_valid_data
+
     #Say which lines contain everything using all the regexs?
     #Use a counter, put the line numbers that were bad in an array so that they can be told
     #put the count tat the end?  This should be a global variable?
