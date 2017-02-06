@@ -4,7 +4,7 @@ class PhoneFinder
 
   def initialize(filename)
     @filename = filename
-    @data = CSV.read(@filename)
+    @data = CSV.read(@filename)[1..-1]
   end
 
   def get_numbers
@@ -16,6 +16,16 @@ class PhoneFinder
     #   end
     # end
     # good_stuff
+  end
+
+  def invalid_number
+    invalid_rows = []
+    @data.each_with_index do |row,counter|
+      unless row[4].match(/\d{3}-\d{3}-\d{4}/)
+        invalid_rows << counter + 1
+      end
+    end
+    invalid_rows
   end
 end
 
