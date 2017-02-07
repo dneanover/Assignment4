@@ -9,49 +9,67 @@ class PhoneFinder
 
   def get_numbers
     @data.flatten.select {|s| s.match(/\d{3}-\d{3}-\d{4}/)}
-#@data is an array of arrays
-    # @data.each do |subarray|
-    #   subarray.each do |string|
-    #     good_stuff += string.scan(/\d{3}-\d{3}-\d{4}/)
-    #   end
-    # end
-    # good_stuff
   end
 
   def invalid_number
-    invalid_rows = []
+    @invalid_numbers = []
     @data.each_with_index do |row,counter|
       unless row[4].match(/\d{3}-\d{3}-\d{4}/)
-        invalid_rows << counter + 1
+        @invalid_numbers << counter + 1
       end
     end
-    invalid_rows
+    @invalid_numbers
   end
 
   def invalid_date
-    invalid_dates = []
+    @invalid_dates = []
     @data.each_with_index do |row,counter|
-      unless row.match(/\d{1,2}\/\d{1,2}\/\d{2,4}$/)
-        invalid_dates << counter + 1
+      unless row[1].match(/\d{1,2}\/\d{1,2}\/\d{2,4}$/)
+        @invalid_dates << counter + 1
       end
     end
-    invalid_rows
+    @invalid_dates
   end
 
   def  invalid_email
-    invalid_emails =[]
+    @invalid_emails =[]
     @data.each_with_index do |row, counter|
-      unless row.match(/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i)
-        invalid_emails << counter + 1
+      unless row[3].match(/\A\w+@\w+.\w{2,4}/)
+        @invalid_emails << counter + 1
       end
     end
-    invalid_emails
+    @invalid_emails
   end
 
+  def invalid_lines
+    @invalid_line =[]
+    @data.each_with_index do |row,counter|
+      unless row[4].match(/\d{3}-\d{3}-\d{4}/) && row[1].match(/\d{1,2}\/\d{1,2}\/\d{2,4}$/) && row[3].match(/\w+@\w+.\w{2,3}/)
+        @invalid_line << counter + 1
+      end
+    end
+    @invalid_line
+  end
 
+  def line_count
+    @counter = 0
+    @data.each_with_index do |row, counter|
+      @counter += 1
+    end
+    @counter
+  end
 
+  def generate_report
+    puts "There were #{@counter}rows"
+    puts "Line(s) #{@invalid_lines} were invalid"
+    puts "Line(s) #{@invalid_numbers} had issues with phone numbers"
+    puts "Line(s) #{@invalid_date} had issues with join date"
+    puts "Line(s) #{@invalid_emails} had issues with valid emails"
+  end
 end
 
+finder = PhoneFinder.new('homework.csv')
+finder.generate_report
 
 # Instantiates with a string which is the path to the CSV file on disk.
 # Reviews all the data in the CSV file, and then puts back a description of the lines which were invalid.

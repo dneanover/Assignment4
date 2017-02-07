@@ -16,36 +16,37 @@ class PhoneFinderTest < Minitest::Test
   def test_invalid_number
    finder = PhoneFinder.new('homework.csv')
    assert_equal [2,3,4,5,6], finder.invalid_number
-   #Go over each line checking to make sure that the phone numbers match the RegEx for Phone number.  If a line (or subarray I guess) doesn't have a phone number, or an invalid one
-   #It should say which line has the error
-   #Regex /\d{3}-\d{3}-\d{4}/
-
    end
 
   def test_valid_join_date
     finder = PhoneFinder.new('homework.csv')
-    assert_equal [2,3], finder.invalid_date
-    #Very similar to the above valid_phone_number.
-    #regex ^\d{1,2}\/\d{1,2}\/\d{2,4}$
+    assert_equal [2,4,5], finder.invalid_date
   end
 
   def test_valid_email
     finder = PhoneFinder.new('homework.csv')
     assert_equal [2,6,7,8], finder.invalid_email
-    #Very similar to above
-    #RegEx
   end
 
   def test_valid_data
-
-    #Say which lines contain everything using all the regexs?
-    #Use a counter, put the line numbers that were bad in an array so that they can be told
-    #put the count tat the end?  This should be a global variable?
+    finder = PhoneFinder.new('homework.csv')
+    assert_equal [2], finder.invalid_lines
   end
 
-  #puts "There were #{counter} lines in the csv.
-  #{invalid_rows} lines were invalid"
+  def test_line_count
+    finder = PhoneFinder.new('homework.csv')
+    assert_equal 7, finder.line_count
+
+  end
+
+  def test_generate_report
+  finder = PhoneFinder.new('homework.csv')
+  finder.generate_report
+  end
+
+
 end
+
 
 
 # Instantiates with a string which is the path to the CSV file on disk.
