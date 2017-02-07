@@ -18,19 +18,19 @@ class PhoneFinderTest < Minitest::Test
    assert_equal [2,3,4,5,6], finder.invalid_number
    end
 
-  def test_valid_join_date
+  def test_invalid_date
     finder = PhoneFinder.new('homework.csv')
-    assert_equal [2,4,5], finder.invalid_date
+    assert_equal [2,5,6,7], finder.invalid_date
   end
 
-  def test_valid_email
+  def test_invalid_email
     finder = PhoneFinder.new('homework.csv')
-    assert_equal [2,6,7,8], finder.invalid_email
+    assert_equal [2,3,4], finder.invalid_email
   end
 
-  def test_valid_data
+  def test_invalid_lines
     finder = PhoneFinder.new('homework.csv')
-    assert_equal [2], finder.invalid_lines
+    assert_equal (2..7).to_a, finder.invalid_lines
   end
 
   def test_line_count
